@@ -29,7 +29,12 @@ describe 'python', type: :class do
               it { is_expected.to contain_package('pip').with_name('python3.7-pip') }
               it { is_expected.to contain_package('python').with_name('python3.7') }
               it { is_expected.to contain_package('python-dev').with_name('python3.7-dev') }
-              it { is_expected.to contain_package('virtualenv').with_name('virtualenv') }
+              case facts[:os]['release']['major']
+              when '14.04'
+                it { is_expected.to contain_package('virtualenv').with_name('python-virtualenv') }
+              else
+                it { is_expected.to contain_package('virtualenv').with_name('virtualenv') }
+              end
             end
           end
 
